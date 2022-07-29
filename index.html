@@ -1,42 +1,56 @@
 <!DOCTYPE html>
 <html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <title>LiveRoom</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<head>
-    <meta charset="UTF-8">
-    <title>LiveRoom</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@40,400,1,0" />
+        <link rel="stylesheet" href="css/app.css">
+        <script type="module" src="js/app.js" defer></script>
+    </head>
+    <body>
+        <header>
+            <img src="images/logo.svg" alt="Logo LiveRoom">
+        </header>
+        <main>
+            <section id="feed">
 
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@40,400,1,0" />
-    <link rel="stylesheet" href="css/app.css">
-    <script type="module" src="js/app.js" defer></script>
-</head>
+            </section>
 
-<body>
-    <header>
-        <img src="images/logo.svg" alt="Logo LiveRoom">
-    </header>
-    <main>
+            <form id="box">
+                <div class="pickerContainer hidden"></div>
+                <textarea rows="1" placeholder="Tapez votre message ..."></textarea>
+                <div class="box-actions">
+                    <button type="button" class="box-emoji">
+                        <span class="material-symbols-sharp">
+                            mood
+                        </span>
+                    </button>
+                    <button class="box-send">
+                        <span class="material-symbols-sharp">
+                            send
+                        </span>
+                    </button>
+                </div>
+            </form>
+            <p class="info-multiline">Shift + Entrée :  écrire un message sur plusieurs lignes.</p>
+        </main>
+
         <div id="modal">
-            <div class="form" id="login">
-                <label>Saisissez votre nom</label>
-                <input type="text" name="username" id="username">
+            <form class="form" id="login">
+                <label for="usernameInput">Saisissez votre nom</label>
+                <input type="text" name="username" id="usernameInput">
                 <button id="btn-login">Valider</button>
-            </div>
+            </form>
         </div>
-        <section id="feed">
 
-        </section>
-
-        <form id="box">
-            <input type="text" placeholder="Tapez votre message ...">
-            <button class="box-send">
-                <span class="material-symbols-sharp">
-                    send
-                </span>
-            </button>
-        </form>
-    </main>
-</body>
-
+        <template id="messageTemplate">
+            <article class="message">
+                <span class="message-username"></span>
+                <span class="message-content"></span>
+                <span class="message-timer"></span>
+            </article>
+        </template>
+    </body>
 </html>
