@@ -23,6 +23,7 @@ export class Room{
 
         this.socket.on('forwardMessage', message => {
             this.display(message, 'recived');
+            this.playNotification();
         });
     }
 
@@ -42,5 +43,10 @@ export class Room{
         messageElement.innerText = message;
 
         this.elements.feed.prepend(messageElement);
+    }
+
+    playNotification(){
+        var audio = new Audio("../sound/notification.mp3");
+        audio.play();
     }
 }
