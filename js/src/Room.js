@@ -1,4 +1,5 @@
 import { io } from "https://cdn.socket.io/4.4.1/socket.io.esm.min.js";
+import { createPicker } from '../../node_modules/picmo/dist/index.js';
 
 export class Room{
     constructor() {
@@ -7,7 +8,12 @@ export class Room{
             feed: document.getElementById('feed'),
             box: document.getElementById('box'),
             boxInput: document.querySelector('#box input'),
+            emojiPicker: document.querySelector('.pickerContainer'),
+            emojiPickerButton: document.querySelector('.box-emoji'),
         };
+        this.picker = createPicker({
+            rootElement: this.elements.emojiPicker
+        });
 
         this.bindEvents();
     }
@@ -19,10 +25,21 @@ export class Room{
             this.elements.boxInput.value = '';
 
             this.send(message);
+            this.toggleDisplayEmojiPicker()
         });
 
         this.socket.on('forwardMessage', message => {
             this.display(message, 'recived');
+        });
+
+        this.elements.emojiPickerButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            this.toggleDisplayEmojiPicker();
+        });
+
+        this.picker.addEventListener('emoji:select', (e) => {
+            console.log(e.emoji);
+            this.addEmoji(e.emoji);
         });
     }
 
@@ -42,5 +59,13 @@ export class Room{
         messageElement.innerText = message;
 
         this.elements.feed.prepend(messageElement);
+    }
+
+    toggleDisplayEmojiPicker(){
+        this.elements.emojiPicker.classList.toggle('hidden');
+    }
+
+    addEmoji(emoji){
+        this.elements.boxInput.value = this.elements.boxInput.value + emoji;
     }
 }

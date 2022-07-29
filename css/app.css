@@ -109,4 +109,22 @@ main{
     color: var(--primary);
 }
 
+#box .box-emoji{
+    position: absolute;
+    right: 30px;
+    top: 0;
+    bottom: 0;
+    color: var(--primary);
+}
+
+.hidden{
+    display: none;
+}
+
+.pickerContainer{
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+}
+
 
