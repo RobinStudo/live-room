@@ -1,4 +1,5 @@
 import { io } from "https://cdn.socket.io/4.4.1/socket.io.esm.min.js";
+import { createPicker } from '../../node_modules/picmo/dist/index.js';
 
 export class Room{
     constructor() {
@@ -9,7 +10,12 @@ export class Room{
             box: document.getElementById('box'),
             boxInput: document.querySelector('#box textarea'),
             boxButton: document.querySelector('#box .box-send'),
+            emojiPicker: document.querySelector('.pickerContainer'),
+            emojiPickerButton: document.querySelector('#box .box-emoji'),
         };
+        this.emojiPicker = createPicker({
+            rootElement: this.elements.emojiPicker
+        });
 
         this.bindEvents();
     }
@@ -21,6 +27,7 @@ export class Room{
             this.elements.boxInput.value = '';
 
             this.send(message);
+            this.toggleDisplayEmojiPicker(true);
         });
 
         this.socket.on('forwardMessage', message => {
@@ -34,6 +41,14 @@ export class Room{
                 e.preventDefault();
                 this.elements.boxButton.click();
             }
+        });
+
+        this.elements.emojiPickerButton.addEventListener('click', () => {
+            this.toggleDisplayEmojiPicker();
+        });
+
+        this.emojiPicker.addEventListener('emoji:select', (e) => {
+            this.addEmoji(e.emoji);
         });
     }
 
@@ -59,7 +74,6 @@ export class Room{
         timeElement.classList.add('timer');
         timeElement.classList.add(classname);
 
-
         this.elements.feed.prepend(messageElement);
         this.elements.feed.prepend(timeElement);
     }
@@ -67,5 +81,17 @@ export class Room{
     playNotification(){
         this.audioNotification.currentTime = 0;
         this.audioNotification.play();
+    }
+
+    toggleDisplayEmojiPicker(closeOnly = false){
+        if(closeOnly){
+            this.elements.emojiPicker.classList.add('hidden');
+        }else{
+            this.elements.emojiPicker.classList.toggle('hidden');
+        }
+    }
+
+    addEmoji(emoji){
+        this.elements.boxInput.value += emoji;
     }
 }

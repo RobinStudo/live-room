@@ -10,6 +10,10 @@
 }
 
 *:focus{
+    outline-color: transparent;
+}
+
+*:focus-visible{
     outline: 2px solid var(--dark);
 }
 
@@ -27,6 +31,10 @@ button{
     background-color: transparent;
     border: none;
     cursor: pointer;
+}
+
+.hidden{
+    display: none;
 }
 
 header{
@@ -120,6 +128,7 @@ span.timer.recived {
 }
 
 #box{
+    position: relative;
     display: flex;
     background-color: var(--light);
     border-radius: 5px;
@@ -149,8 +158,15 @@ span.timer.recived {
     vertical-align: bottom;
 }
 
+.pickerContainer{
+    position: absolute;
+    bottom: 100%;
+    right: 0;
+}
+
 p.info-multiline {
     font-size: 0.8rem;
     color: var(--light);
     margin: 5px 0;
 }
+
