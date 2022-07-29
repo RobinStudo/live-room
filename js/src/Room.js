@@ -41,6 +41,15 @@ export class Room{
         messageElement.classList.add(classname);
         messageElement.innerText = message;
 
+        const date = new Date();
+        const timeMessage = date.getHours() + ':' + date.getMinutes();
+        const timeElement = document.createElement('span')
+        timeElement.innerText = timeMessage;
+        timeElement.classList.add('timer');
+        timeElement.classList.add(classname);
+
+
         this.elements.feed.prepend(messageElement);
+        this.elements.feed.prepend(timeElement);
     }
 }
