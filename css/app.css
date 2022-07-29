@@ -34,12 +34,14 @@ button{
 }
 
 .hidden{
-    display: none;
+    display: none!important;
 }
 
 header{
+    z-index: 3;
     text-align: center;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    background-color: var(--primary);
 }
 
 header img{
@@ -83,33 +85,48 @@ main{
 }
 
 .message{
-    border-radius: 5px;
-    padding: 10px;
-    margin-top: 10px;
+    margin: 5px 0;
     max-width: 70%;
     font-size: 1rem;
     overflow-wrap: break-word;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    color: var(--light);
+}
+
+.message-username{
+    font-weight: bold;
+}
+
+.message-content{
+    border-radius: 5px;
+    padding: 10px;
 }
 
 .message.sent{
     align-self: flex-end;
+}
+
+.message.sent .message-content{
     background-color: var(--light);
     color: var(--dark);
 }
 
 .message.recived{
     align-self: flex-start;
+}
+
+.message.recived .message-content{
     background-color: var(--dark);
     color: var(--light);
 }
 
-span.timer {
+.message-timer {
     font-size: 0.75rem;
-    color: var(--light);
-    margin-top: 5px;
 }
 
-span.timer::before {
+.message-timer::before {
     content: url(../images/clock.svg);
     display: inline-block;
     width: 12px;
@@ -117,12 +134,12 @@ span.timer::before {
     margin-right: 3px;
 }
 
-span.timer.sent {
+.message.sent .message-timer{
     align-self: flex-end;
     padding-right: 5px;
 }
 
-span.timer.recived {
+.message.recived .message-timer{
     align-self: flex-start;
     padding-left: 5px;
 }
@@ -170,3 +187,40 @@ p.info-multiline {
     margin: 5px 0;
 }
 
+#modal {
+    background-color: rgba(0, 0, 0, 0.4);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#modal .form{
+    background-color: var(--light);
+    border-radius: 5px;
+    padding: 10px;
+    display: flex;
+    gap: 10px;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.3);
+}
+
+#modal .form input{
+    border: none;
+    padding: 5px;
+    background-color: var(--secondary);
+    color: var(--light);
+}
+
+#modal .form button{
+    background-color: var(--primary);
+    color: var(--light);
+    border-radius: 5px;
+    padding: 5px 10px;
+}

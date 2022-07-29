@@ -1,22 +1,26 @@
 import { io } from "https://cdn.socket.io/4.4.1/socket.io.esm.min.js";
 import { createPicker } from '../../node_modules/picmo/dist/index.js';
+import { DateUtil } from './DateUtil.js';
 
 export class Room{
-    constructor() {
+    constructor(account) {
         this.socket = io('ws://localhost:3000');
         this.audioNotification = new Audio("../sound/notification.mp3");
         this.elements = {
             feed: document.getElementById('feed'),
             box: document.getElementById('box'),
+            usernameInput: document.getElementById('username'),
             boxInput: document.querySelector('#box textarea'),
             boxButton: document.querySelector('#box .box-send'),
             emojiPicker: document.querySelector('.pickerContainer'),
             emojiPickerButton: document.querySelector('#box .box-emoji'),
+            messageTemplate: document.getElementById('messageTemplate'),
         };
         this.emojiPicker = createPicker({
             rootElement: this.elements.emojiPicker
         });
 
+        this.account = account;
         this.bindEvents();
     }
 
@@ -30,8 +34,8 @@ export class Room{
             this.toggleDisplayEmojiPicker(true);
         });
 
-        this.socket.on('forwardMessage', message => {
-            this.display(message, 'recived');
+        this.socket.on('forwardMessage', messageData => {
+            this.display(JSON.parse(messageData), 'recived');
             this.playNotification();
         });
 
@@ -57,25 +61,25 @@ export class Room{
             return;
         }
 
-        this.socket.emit('originMessage', message);
-        this.display(message, 'sent');
+        const messageData = {
+            username: this.account.getUser(),
+            message: message,
+        };
+
+        this.socket.emit('originMessage', JSON.stringify(messageData));
+        this.display(messageData, 'sent');
     }
 
-    display(message, classname){
-        const messageElement = document.createElement('article');
-        messageElement.classList.add('message');
-        messageElement.classList.add(classname);
-        messageElement.innerText = message;
+    display(messageData, classname){
+        const timeMessage = DateUtil.getCurrentFormatted();
 
-        const date = new Date();
-        const timeMessage = date.getHours() + ':' + date.getMinutes();
-        const timeElement = document.createElement('span')
-        timeElement.innerText = timeMessage;
-        timeElement.classList.add('timer');
-        timeElement.classList.add(classname);
+        const messageElement = this.elements.messageTemplate.content.cloneNode(true).querySelector('article');
+        messageElement.classList.add(classname);
+        messageElement.querySelector('.message-username').innerText = messageData.username;
+        messageElement.querySelector('.message-content').innerText = messageData.message;
+        messageElement.querySelector('.message-timer').innerText = timeMessage;
 
         this.elements.feed.prepend(messageElement);
-        this.elements.feed.prepend(timeElement);
     }
 
     playNotification(){

@@ -7,8 +7,8 @@ const io = new Server({
 });
 
 io.on("connection", (socket) => {
-    socket.on('originMessage', (message) => {
-        socket.broadcast.emit('forwardMessage', message);
+    socket.on('originMessage', (messageData) => {
+        socket.broadcast.emit('forwardMessage', messageData);
     });
 });
 

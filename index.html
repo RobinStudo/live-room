@@ -36,5 +36,21 @@
             </form>
             <p class="info-multiline">Shift + Entrée :  écrire un message sur plusieurs lignes.</p>
         </main>
+
+        <div id="modal">
+            <form class="form" id="login">
+                <label for="usernameInput">Saisissez votre nom</label>
+                <input type="text" name="username" id="usernameInput">
+                <button id="btn-login">Valider</button>
+            </form>
+        </div>
+
+        <template id="messageTemplate">
+            <article class="message">
+                <span class="message-username"></span>
+                <span class="message-content"></span>
+                <span class="message-timer"></span>
+            </article>
+        </template>
     </body>
 </html>
