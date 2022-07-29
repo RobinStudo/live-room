@@ -6,7 +6,7 @@ export class Room{
         this.elements = {
             feed: document.getElementById('feed'),
             box: document.getElementById('box'),
-            boxInput: document.querySelector('#box input'),
+            boxInput: document.querySelector('#box textarea'),
         };
 
         this.bindEvents();
