@@ -54,6 +54,8 @@ main{
     row-gap: 10px;
     overflow-y: auto;
     padding: 10px 5px 10px 0;
+    scrollbar-color: #21282D #4F5B79;
+    scrollbar-width: thin;
 }
 
 #feed::-webkit-scrollbar{
@@ -76,6 +78,10 @@ main{
     font-size: 1rem;
 }
 
+.message::after{
+    content: "\a";
+}
+
 .message.sent{
     align-self: flex-end;
     background-color: var(--light);
@@ -90,15 +96,20 @@ main{
 
 #box{
     position: relative;
-}
-
-#box input{
+    display: flex;
+    overflow-wrap: break-word;
     width: 100%;
-    height: 100%;
     border: none;
     padding: 10px;
     border-radius: 5px;
     background-color: var(--light);
+}
+
+#box input{
+    width: 95%;
+    border: none;
+    background-color: var(--light);
+    overflow: scroll;
 }
 
 #box .box-send{
@@ -107,6 +118,9 @@ main{
     top: 0;
     bottom: 0;
     color: var(--primary);
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 
