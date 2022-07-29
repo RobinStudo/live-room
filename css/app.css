@@ -94,6 +94,15 @@ span.timer {
     margin-top: 5px;
 }
 
+span.timer::before {
+    display: inline-block;
+    content: '...';
+    color: transparent;
+    width: 12px;
+    background: url(../images/clock.svg) no-repeat center;
+    margin-right: 3px;
+}
+
 span.timer.sent {
     align-self: flex-end;
     padding-right: 5px;
