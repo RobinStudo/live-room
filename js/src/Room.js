@@ -7,7 +7,7 @@ export class Room{
             feed: document.getElementById('feed'),
             box: document.getElementById('box'),
             boxInput: document.querySelector('#box textarea'),
-            button: document.querySelector('button'),
+            boxButton: document.querySelector('#box .box-send'),
         };
 
         this.bindEvents();
@@ -26,13 +26,13 @@ export class Room{
             this.display(message, 'recived');
         });
 
-        this.elements.boxInput.onkeypress = (e) => {
-            const keyCode = e.keyCode
-            if (keyCode === 13  && !e.shiftKey) {
-                this.elements.button.click();
-               e.preventDefault();
+        this.elements.boxInput.addEventListener('keypress', (e) => {
+            const keyCode = e.code;
+            if (keyCode === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                this.elements.boxButton.click();
             }
-        }
+        });
     }
 
     send(message){
