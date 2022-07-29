@@ -9,6 +9,10 @@
     box-sizing: border-box;
 }
 
+*:focus{
+    outline: 2px solid var(--dark);
+}
+
 body{
     display: flex;
     flex-direction: column;
@@ -58,16 +62,16 @@ main{
     scrollbar-width: thin;
 }
 
-#feed::-webkit-scrollbar{
+#feed::-webkit-scrollbar, #box textarea::-webkit-scrollbar {
     width: 5px;
 }
 
-#feed::-webkit-scrollbar-track{
+#feed::-webkit-scrollbar-track, #box textarea::-webkit-scrollbar {
     background-color: rgba(255, 255, 255, 0.2);
     margin: 10px 0;
 }
 
-#feed::-webkit-scrollbar-thumb{
+#feed::-webkit-scrollbar-thumb, #box textarea::-webkit-scrollbar {
     background: var(--light);
 }
 
@@ -76,10 +80,7 @@ main{
     padding: 10px;
     max-width: 70%;
     font-size: 1rem;
-}
-
-.message::after{
-    content: "\a";
+    overflow-wrap: break-word;
 }
 
 .message.sent{
@@ -95,32 +96,38 @@ main{
 }
 
 #box{
-    position: relative;
+    display: flex;
+    background-color: var(--light);
+    border-radius: 5px;
+}
+
+#box textarea{
+    flex: 1;
     display: flex;
     overflow-wrap: break-word;
+
     width: 100%;
     border: none;
     padding: 10px;
-    border-radius: 5px;
-    background-color: var(--light);
+    background-color: transparent;
+    font-family: sans-serif;
+
+    resize: none;
 }
 
-#box input{
-    width: 95%;
-    border: none;
-    background-color: var(--light);
-    overflow: scroll;
-}
-
-#box .box-send{
-    position: absolute;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    color: var(--primary);
+#box .box-actions{
     display: flex;
-    justify-content: center;
     align-items: center;
 }
 
+#box .box-actions button span{
+    color: var(--primary);
+    vertical-align: bottom;
+}
+
+p.info-multiline {
+    font-size: 0.8rem;
+    color: var(--light);
+    margin: 5px 0;
+}
 

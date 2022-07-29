@@ -3,10 +3,12 @@ import { io } from "https://cdn.socket.io/4.4.1/socket.io.esm.min.js";
 export class Room{
     constructor() {
         this.socket = io('ws://localhost:3000');
+        this.audioNotification = new Audio("../sound/notification.mp3");
         this.elements = {
             feed: document.getElementById('feed'),
             box: document.getElementById('box'),
-            boxInput: document.querySelector('#box input'),
+            boxInput: document.querySelector('#box textarea'),
+            boxButton: document.querySelector('#box .box-send'),
         };
 
         this.bindEvents();
@@ -23,6 +25,15 @@ export class Room{
 
         this.socket.on('forwardMessage', message => {
             this.display(message, 'recived');
+            this.playNotification();
+        });
+
+        this.elements.boxInput.addEventListener('keypress', (e) => {
+            const keyCode = e.code;
+            if (keyCode === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                this.elements.boxButton.click();
+            }
         });
     }
 
@@ -42,5 +53,10 @@ export class Room{
         messageElement.innerText = message;
 
         this.elements.feed.prepend(messageElement);
+    }
+
+    playNotification(){
+        this.audioNotification.currentTime = 0;
+        this.audioNotification.play();
     }
 }
