@@ -3,6 +3,7 @@ import { io } from "https://cdn.socket.io/4.4.1/socket.io.esm.min.js";
 export class Room{
     constructor() {
         this.socket = io('ws://localhost:3000');
+        this.audioNotification = new Audio("../sound/notification.mp3");
         this.elements = {
             feed: document.getElementById('feed'),
             box: document.getElementById('box'),
@@ -46,7 +47,7 @@ export class Room{
     }
 
     playNotification(){
-        var audio = new Audio("../sound/notification.mp3");
-        audio.play();
+        this.audioNotification.currentTime = 0;
+        this.audioNotification.play();
     }
 }
