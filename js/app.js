@@ -9,7 +9,7 @@ input.addEventListener('input', () => {
 });
 
 const login = event => {  
-    if(username != null)
+    if(username != null || username.match("[^\\s]"))
     {
         console.log(username);
         modal.style.display = 'none';
