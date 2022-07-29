@@ -7,6 +7,7 @@ export class Room{
             feed: document.getElementById('feed'),
             box: document.getElementById('box'),
             boxInput: document.querySelector('#box input'),
+            username: document.getElementById('username'),
         };
 
         this.bindEvents();
@@ -15,7 +16,7 @@ export class Room{
     bindEvents() {
         this.elements.box.addEventListener('submit', (e) => {
             e.preventDefault();
-            const message = this.elements.boxInput.value;
+            const message = this.elements.username.value + ' - ' + this.elements.boxInput.value;
             this.elements.boxInput.value = '';
 
             this.send(message);
