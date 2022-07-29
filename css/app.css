@@ -112,4 +112,9 @@ main{
     color: var(--primary);
 }
 
+p.info-multiline {
+    font-size: 0.8rem;
+    color: var(--light);
+    margin: 5px 0;
+}
 
