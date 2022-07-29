@@ -4,14 +4,16 @@ import { createPicker } from '../../node_modules/picmo/dist/index.js';
 export class Room{
     constructor() {
         this.socket = io('ws://localhost:3000');
+        this.audioNotification = new Audio("../sound/notification.mp3");
         this.elements = {
             feed: document.getElementById('feed'),
             box: document.getElementById('box'),
-            boxInput: document.querySelector('#box input'),
+            boxInput: document.querySelector('#box textarea'),
+            boxButton: document.querySelector('#box .box-send'),
             emojiPicker: document.querySelector('.pickerContainer'),
-            emojiPickerButton: document.querySelector('.box-emoji'),
+            emojiPickerButton: document.querySelector('#box .box-emoji'),
         };
-        this.picker = createPicker({
+        this.emojiPicker = createPicker({
             rootElement: this.elements.emojiPicker
         });
 
@@ -25,20 +27,27 @@ export class Room{
             this.elements.boxInput.value = '';
 
             this.send(message);
-            this.toggleDisplayEmojiPicker()
+            this.toggleDisplayEmojiPicker(true);
         });
 
         this.socket.on('forwardMessage', message => {
             this.display(message, 'recived');
+            this.playNotification();
         });
 
-        this.elements.emojiPickerButton.addEventListener('click', (e) => {
-            e.preventDefault();
+        this.elements.boxInput.addEventListener('keypress', (e) => {
+            const keyCode = e.code;
+            if (keyCode === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                this.elements.boxButton.click();
+            }
+        });
+
+        this.elements.emojiPickerButton.addEventListener('click', () => {
             this.toggleDisplayEmojiPicker();
         });
 
-        this.picker.addEventListener('emoji:select', (e) => {
-            console.log(e.emoji);
+        this.emojiPicker.addEventListener('emoji:select', (e) => {
             this.addEmoji(e.emoji);
         });
     }
@@ -58,14 +67,31 @@ export class Room{
         messageElement.classList.add(classname);
         messageElement.innerText = message;
 
+        const date = new Date();
+        const timeMessage = date.getHours() + ':' + date.getMinutes();
+        const timeElement = document.createElement('span')
+        timeElement.innerText = timeMessage;
+        timeElement.classList.add('timer');
+        timeElement.classList.add(classname);
+
         this.elements.feed.prepend(messageElement);
+        this.elements.feed.prepend(timeElement);
     }
 
-    toggleDisplayEmojiPicker(){
-        this.elements.emojiPicker.classList.toggle('hidden');
+    playNotification(){
+        this.audioNotification.currentTime = 0;
+        this.audioNotification.play();
+    }
+
+    toggleDisplayEmojiPicker(closeOnly = false){
+        if(closeOnly){
+            this.elements.emojiPicker.classList.add('hidden');
+        }else{
+            this.elements.emojiPicker.classList.toggle('hidden');
+        }
     }
 
     addEmoji(emoji){
-        this.elements.boxInput.value = this.elements.boxInput.value + emoji;
+        this.elements.boxInput.value += emoji;
     }
 }

@@ -6,7 +6,6 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@40,400,1,0" />
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
         <link rel="stylesheet" href="css/app.css">
         <script type="module" src="js/app.js" defer></script>
     </head>
@@ -17,28 +16,25 @@
         <main>
             <section id="feed">
 
-
-
             </section>
-
-
 
             <form id="box">
                 <div class="pickerContainer hidden"></div>
-                <input type="text" placeholder="Tapez votre message ...">
-                <div>
+                <textarea rows="1" placeholder="Tapez votre message ..."></textarea>
+                <div class="box-actions">
+                    <button type="button" class="box-emoji">
+                        <span class="material-symbols-sharp">
+                            mood
+                        </span>
+                    </button>
                     <button class="box-send">
                         <span class="material-symbols-sharp">
                             send
                         </span>
                     </button>
-                    <button class="box-emoji">
-                        <span class="material-symbols-outlined">
-                            mood
-                        </span>
-                    </button>
                 </div>
             </form>
+            <p class="info-multiline">Shift + Entrée :  écrire un message sur plusieurs lignes.</p>
         </main>
     </body>
 </html>
